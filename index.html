@@ -1,69 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="stylesheet" type="text/css" href="pebl.css">
-  <meta name="google-site-verification" content="abc123xyz456" />
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>pebl-token</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>$PEB | COMING SOON</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bungee&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #39FF14; /* Neon Green */
+            --bg: #000000;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: white;
+            font-family: 'Bungee', cursive;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        .status-tag {
+            font-size: clamp(1rem, 2vw, 1.5rem);
+            color: var(--primary);
+            letter-spacing: 5px;
+            margin-bottom: 20px;
+            display: block;
+            animation: blink 1.5s infinite;
+        }
+
+        h1 {
+            font-size: clamp(3rem, 10vw, 8rem);
+            line-height: 0.9;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        p {
+            font-size: clamp(1.2rem, 3vw, 2.5rem);
+            color: #eeeeee;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        @keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 0.3; }
+            100% { opacity: 1; }
+        }
+
+        /* Subtle swamp glow */
+        .glow {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: var(--primary);
+            filter: blur(150px);
+            opacity: 0.15;
+            z-index: -1;
+        }
+    </style>
 </head>
 <body>
-  <div class="notice">
-    Announcement: On sale! 99% of token supply is currently dirtributed. Available in Minswap.
-  </div>
 
-  <header>
-    <div class="logo-container">
-	    <img src="pebl logo name.png" alt="PEBL Logo" class="pebl.logo">
-    </div>	
-        </header>
+    <div class="glow"></div>
 
-  <main>
-    <section class="subtitle">
-        <h2>Fixed supply | Rare Collectible | Store of Value | Shield against inflation</h2>
-         <p>A limited and indivisble token on Cardano with a permanently fixed supply and zero future issuance crafted to embody rarity, preserve value, 
-          and stand as a lasting digital asset for collectors and investors alike.</p>
-    </section>
-
-    <section class="about-info">
-      <h2>About PEBL</h2>
-	     <p>With its name meaning, "Powering Every Blockchain Leap", PEBL carries a bold and forward looking identity. It is a utility, collectible, and fungible token, 
-        designed to power project use while holding lasting value for those who recognize its potential.</p>
-         <br>
-        <p> The supply of PEBL is permanently fixed - no additional minting, no burning and no dillution. This ensures true scarcity. Circulating freely among 
-          collectors, holders and users, PEBL is built for long-term value preservation and recognition as a rare digital asset within the Cardano ecosystem.
-        </p>    
-    </section>
-
-    <section class="token-info">
-      <h2>Token Supply</h2>
-      <p>Max Supply: 25,000,000</p>
-      <p>Decimals: 0 <i>(Indivisible)</i></p>
-      <p>Chain: Cardano</p>
-      <p>Policy ID: <a href="https://cardanoscan.io/token/1edf6c21ab91608dbf3582cc54479de8d0f7a0e59de982e119baaf575045424c?tab=topholders" target="_blank" rel="noopener noreferrer"><i>Confirm the policy id here</i></a></p>
-	    <p>Policy Status: Locked <i>(supply cannot be modified)</i></p>
-    </section>
-    	
-    <section class="distribution-info">
-      <h2>Distribution</h2>
-      <p>We are currently lauching our first and only token sale, where 99 percent of the total supply will be released to the public at a fair entry price. This one-time 
-         distribution ensures transparency and equal opportunity, with no future token sales planned.
-      </p><br>
-
-      <p>To strengthen liquidity and visibility, we encourage holders to provide liquidity across multiple Cardano DEXs, helping establish PEBL as a trusted and 
-        recognized asset in the eyes of traders and investors.
-      </p><br>
-
-      <p>You can purchase PEBL token now at <a href="https://minswap.org/" target="blank" rel="noopener noreferrer">https://minswap.org/</a></p>
-      <br><br>
-      <p><i>PS: PEBL is newly launched token. If it does not appear as verified on Minswap, rest assured it remains fully legitimate and secured under a locked policy.</i><p>
-    </section>
-  </main>
-
-  <footer>
-    <p>This is not a scam, not even a rugpull, its an honest total supply distribution.</p>
-    <br>
-  </footer>
+    <div class="container">
+        <span class="status-tag">SYSTEM ONLINE</span>
+        <h1>$PEB</h1>
+        <p>THE PAGE WILL LAUNCH WITHIN 24 HOURS</p>
+    </div>
 
 </body>
 </html>
