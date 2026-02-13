@@ -3,87 +3,385 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>$PEB | COMING SOON</title>
-    <link href="https://fonts.googleapis.com/css2?family=Bungee&display=swap" rel="stylesheet">
+    <meta name="robots" content="index, follow">
+    <title>PEB | The Lone Croc</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Inter:wght@400;900&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="images/favicon.png">
     <style>
         :root {
-            --primary: #39FF14; /* Neon Green */
-            --bg: #000000;
+            --primary: #39FF14; /* Neon Croc Green */
+            --bg: #050805; /* Deep Swamp Black */
+            --nav-width: 70px;
+            --nav-open: 230px;
         }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; scroll-snap-type: y mandatory; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: white; overflow-x: hidden; }
+        h1, h2 { font-family: 'Bungee', cursive; color: var(--primary); line-height: 1; }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        /* --- Side Nav (100% Hover Effect) --- */
+        nav {
+            position: fixed; left: 0; top: 0; height: 100vh;
+            width: var(--nav-width); background: #000;
+            border-right: 1px solid rgba(57, 255, 20, 0.2);
+            transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1000; overflow: hidden;
         }
-
-        body {
-            background-color: var(--bg);
-            color: white;
-            font-family: 'Bungee', cursive;
-            height: 100vh;
+        nav:hover { width: var(--nav-open); border-right: 1px solid var(--primary); }
+        nav a {
+            display: flex; align-items: center; padding: 1.5rem;
+            text-decoration: none; color: #666; transition: 0.3s; white-space: nowrap;
+        }
+        nav a:hover { color: var(--primary); background: rgba(57, 255, 20, 0.1); }
+        .nav-icon { min-width: 40px; font-size: 1.5rem; margin-right: 20px; }
+        
+        nav a {
             display: flex;
-            justify-content: center;
             align-items: center;
-            text-align: center;
+            text-decoration: none;
+            padding: 1.2rem 1.5rem;
+            white-space: nowrap;
+            transition: 0.2s;
+            
+            /* BOLDNESS WITHOUT SIZE INCREASE */
+            font-family: 'Bungee', cursive;
+            font-size: 1rem; /* Keeps it compact */
+            font-weight: 900; /* Forces maximum thickness */
+            color: #ffffff; /* High contrast white for a bold look */
+            text-transform: uppercase;
+            letter-spacing: 0.5px; /* Keeps it sharp */
+        }
+        .nav-icon {
+            min-width: 40px;
+            font-size: 1.4rem; /* Balanced size */
+            margin-right: 15px;
+            filter: saturate(1.5); /* Makes the emoji colors look deeper/bolder */
+        }
+        /* --- Disclaimer Popup --- */
+        #disclaimer {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.98);
+            display: flex; justify-content: center; align-items: center; z-index: 9999;
+        }
+        .modal {
+            background: #111; border: 3px solid var(--primary); padding: 3rem;
+            max-width: 600px; text-align: center; border-radius: 30px; margin: 20px;
+        }
+        .modal p { margin: 1.5rem 0; line-height: 1.6; color: #ccc; }
+
+        /* --- Sections --- */
+        section {
+            height: 100vh; display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            padding-left: var(--nav-width); text-align: center;
+            position: relative; box-sizing: border-box;
+        }
+        .hero-img {
+            /* MIN: 300px, IDEAL: 50vw (half the screen), MAX: 800px */
+            width: clamp(300px, 50vw, 450px); 
+            
+            /* Adds that "glow" that makes the image pop against the black */
+            filter: drop-shadow(0 0 50px rgba(57, 255, 20, 0.3));
+            
+            /* Ensures the image stays above the text and doesn't distort */
+            height: auto;
+            display: block;
+            margin: 0 auto 1.5rem auto;
+            
+            /* A slight "float" animation to make it look playful */
+            animation: float 4s ease-in-out infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }       
+        .btn {
+            background: var(--primary); color: #000; padding: 1rem 2.5rem;
+            font-family: 'Bungee'; text-decoration: none; border-radius: 50px;
+            display: inline-block; transition: 0.3s; border: none; cursor: pointer;
+        }
+        .btn:hover { transform: scale(1.1); box-shadow: 0 0 30px var(--primary); }
+
+        /* Section Specifics */
+        #hero { background: #c4ed85ff;}
+        #about { background: linear-gradient(180deg, #050805 0%, #0a110a 100%); }
+        #tokenomics { background: #050805; }
+        #community { background: #0a110a; }
+        #buy { background: #c4ed85ff; color: #000; }
+        #buy h2 { color: #000; }
+
+        .stat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-top: 30px; }
+        .stat-card { border: 1px solid var(--primary); padding: 20px; border-radius: 15px; }
+        
+        .no-scroll { overflow: hidden; }
+        
+                /* --- FAQ Styles --- */
+        .faq-container {
+            width: 100%;
+            max-width: 700px;
+            text-align: left;
+            margin-top: 2rem;
+        }
+        .faq-item {
+            background: rgba(57, 255, 20, 0.05);
+            border: 1px solid rgba(57, 255, 20, 0.2);
+            margin-bottom: 10px;
+            border-radius: 10px;
             overflow: hidden;
         }
-
-        .container {
+        .faq-question {
             padding: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+            font-family: 'Bungee', cursive;
+            font-size: 0.9rem;
+            color: #eeeeee;;
+            transition: background 0.3s;
+        }
+        .faq-question:hover {
+            background: rgba(57, 255, 20, 0.1);
+        }
+        .faq-answer {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s;
+            color: #ccc;
+            font-size: 0.95rem;
+            line-height: 1.6;
         }
 
-        .status-tag {
-            font-size: clamp(1rem, 2vw, 1.5rem);
-            color: var(--primary);
-            letter-spacing: 5px;
-            margin-bottom: 20px;
-            display: block;
-            animation: blink 1.5s infinite;
+        .faq-item.active .faq-answer {
+            max-height: 200px; /* Adjust based on text length */
+            padding: 0 20px 20px 20px;
+        }
+
+        .faq-icon {
+            transition: transform 0.3s;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+        /* --- The Landscape Fix --- */
+        @media (max-height: 500px) and (orientation: landscape) {
+        section {
+            min-height: 100vh;
+            height: 120vh;
+            padding-top: 80px; /* Space for the top of the screen */
+            padding-bottom: 80px;
+            justify-content: flex-start; /* Starts content at top instead of centering */
+        }
+        .hero-img {
+            width: 150px; /* Shrinks the croc so he doesn't eat the whole screen */
+            margin-bottom: 10px;
         }
 
         h1 {
-            font-size: clamp(3rem, 10vw, 8rem);
-            line-height: 0.9;
-            margin-bottom: 20px;
-            text-transform: uppercase;
+            font-size: 2.5rem; /* Manually caps the size for short screens */
         }
-
-        p {
-            font-size: clamp(1.2rem, 3vw, 2.5rem);
-            color: #eeeeee;
-            max-width: 800px;
-            margin: 0 auto;
+        h2 {
+            font-size: 1.5rem;
         }
-
-        @keyframes blink {
-            0% { opacity: 1; }
-            50% { opacity: 0.3; }
-            100% { opacity: 1; }
+        #tokenomics {
+            height: auto;
         }
-
-        /* Subtle swamp glow */
-        .glow {
-            position: absolute;
-            width: 300px;
-            height: 300px;
-            background: var(--primary);
-            filter: blur(150px);
-            opacity: 0.15;
-            z-index: -1;
+        #tokenomics h3, #tokenomics p{
+            font-size: 1rem;
         }
+        #tokenomics p{
+            font-size: 0.7rem;
+        }
+    }
     </style>
 </head>
-<body>
+<body class="no-scroll">
 
-    <div class="glow"></div>
-
-    <div class="container">
-        <span class="status-tag">SYSTEM ONLINE</span>
-        <h1>STAY TUNED</h1>
-        <p>THE PAGE WILL LAUNCH SOON</p>
+    <div id="disclaimer">
+        <div class="modal">
+            <h2>⚠️ THE PEB PROTOCOL</h2>
+            <p>
+                <strong>pebcoin.org</strong> is for fun and entertainment only. $PEB has no intrinsic value. 
+                This project launched with <strong>zero social media accounts</strong>. 
+                It is a pure community experiment. You are the marketing team. You are the movement.
+            </p>
+            <button class="btn" onclick="accept()">ENTER THE SWAMP</button>
+        </div>
     </div>
 
+    <nav>
+        <a href="#hero"><span class="nav-icon">🐊</span> <span>The Croc</span></a>
+        <a href="#about"><span class="nav-icon">📜</span> <span>Origin</span></a>
+        <a href="#tokenomics"><span class="nav-icon">🥩</span> <span>Croc-nomics</span></a>
+        <a href="#community"><span class="nav-icon">🌍</span> <span>Movement</span></a>
+        <a href="#buy"><span class="nav-icon">💎</span> <span>Grab $PEB</span></a>
+        <a href="#faq"><span class="nav-icon">💬</span> <span>Croc-Q&A</span></a>
+        <a href="#contribute"><span class="nav-icon">🏗️</span> <span>Contribute</span></a>
+    </nav>
+
+    <section id="hero">
+        <img src="/media/duke02/HDD Storage/Web Project/Pebcoin/images/176087440345.png" class="hero-img" alt="Peb the Croc">
+        <h1 style="font-size: clamp(5rem, 12vw, 10rem); color: #5ea256ff; text-shadow: 2px 2px 0 black, -2px 2px 0 black, -2px -2px 0 black, 2px -2px 0 black;">$PEB</h1>
+        <p style="font-size: clamp(1.2rem, 3vw, 2.5rem); letter-spacing: clamp(2px, 1vw, 8px); font-family: 'Bungee'; color: #070704ff; text-transform: uppercase;">
+        BORN AT PEBCOIN.ORG
+</p>
+    </section>
+
+    <section id="about">
+        <div style="max-width: 700px; padding: 20px;">
+            <h2 style="font-size: clamp(2.5rem, 6vw, 4.5rem); letter-spacing: clamp(2px, 1vw, 8px); font-family: 'Bungee'; color: var(--primary); text-transform: uppercase; line-height: 1.1;">THE SWAMP ORIGINS</h2>
+            <p style="margin-top: 25px; font-size: clamp(1.1rem, 1.8vw, 1.6rem); line-height: 1.5; max-width: 800px; font-weight: 400; color: #eeeeee;">Peb didn't have a Twitter. Peb didn't have a Telegram. Peb just had a domain and a dream to chomp the moon. This is the first coin where the community isn't joined, it's <strong>created</strong>.</p>
+        </div>
+    </section>
+
+    <section id="tokenomics">
+        <h2 style="font-size: clamp(2.5rem, 6vw, 4.5rem); letter-spacing: clamp(2px, 1vw, 8px); font-family: 'Bungee'; color: var(--primary); text-transform: uppercase; line-height: 1.1;">CROC-NOMICS</h2>
+        <div class="stat-grid">
+            <div class="stat-card" style="margin-top: 25px; font-size: clamp(1.1rem, 1.8vw, 1.6rem); line-height: 1.5; max-width: 800px; font-weight: 400; color: #eeeeee;"><h3>1 BILLION</h3><p>TOTAL SUPPLY</p></div>
+            <div class="stat-card" style="margin-top: 25px; font-size: clamp(1.1rem, 1.8vw, 1.6rem); line-height: 1.5; max-width: 800px; font-weight: 400; color: #eeeeee;"><h3>100%</h3><p>FAIR LAUNCH</p></div>
+            <div class="stat-card" style="margin-top: 25px; font-size: clamp(1.1rem, 1.8vw, 1.6rem); line-height: 1.5; max-width: 800px; font-weight: 400; color: #eeeeee;"><h3>0%</h3><p>TAX</p></div>
+            <div class="stat-card" style="margin-top: 25px; font-size: clamp(1.1rem, 1.8vw, 1.6rem); line-height: 1.5; max-width: 800px; font-weight: 400; color: #eeeeee;"><h3>2%</h3><p>CREATOR HOLDINGS</p></div>
+            <div class="stat-card" style="margin-top: 25px; font-size: clamp(1.1rem, 1.8vw, 1.6rem); line-height: 1.5; max-width: 800px; font-weight: 400; color: #eeeeee;"><h3>MINT/FREEZE</h3><p>REVOKED</p></div>
+            <div class="stat-card" style="margin-top: 25px; font-size: clamp(1.1rem, 1.8vw, 1.6rem); line-height: 1.5; max-width: 800px; font-weight: 400; color: #eeeeee;"><h3>LIQUIDITY</h3><p>AUTO BURN WHEN GRADUATED</p></div>
+        </div>
+    </section>
+
+    <section id="community">
+        <div style="max-width: 700px; padding: 20px;">
+            <h2 style="font-size: clamp(2.5rem, 6vw, 4.5rem); letter-spacing: clamp(2px, 1vw, 8px); font-family: 'Bungee'; color: var(--primary); text-transform: uppercase; line-height: 1.1;">THE MOVEMENT</h2>
+            <p style="margin-top: 25px; font-size: clamp(1.1rem, 1.8vw, 1.6rem); line-height: 1.5; max-width: 800px; font-weight: 400; color: #eeeeee;">There are no "official" links. If you see a $PEB in X/Twitter, a fan made it. If you see a Telegram, the community built it. pebcoin.org is the only truth.
+            <br><strong>BE THE SOCIAL MEDIA.</strong></p>
+        </div>
+    </section>
+
+    <section id="buy">
+        <h2 style="font-size: clamp(2.5rem, 6vw, 4.5rem); letter-spacing: clamp(2px, 1vw, 8px); font-family: 'Bungee'; text-transform: uppercase; line-height: 1.1;">JOIN THE CHOMP</h2>                
+        <h3 style="font-family: 'Bungee'; font-size: 1.2rem; margin-bottom: 15px; margin-top: 80px;">CONTRACT ADDRESS</h3>
+    
+    <div onclick="copyCA()" style="cursor: pointer; display: inline-flex; align-items: center; background: #111; border: 1px solid #333; padding: 10px 20px; transition: 0.3s; max-width: 95%;" onmouseover="this.style.borderColor='var(--primary)'" onmouseout="this.style.borderColor='#333'">
+        
+        <code id="ca-text" style="color: #eee; font-family: monospace; font-size: 0.9rem; margin-right: 15px; word-break: break-all;">
+            GWbTUV21W1VbMx8fKizAhZu8PTGa8qnKHSy7Vmiapump
+        </code>
+        
+        <div id="copy-status" style="background: white; color: black; font-family: 'Bungee'; font-size: 0.7rem; padding: 5px 10px; border-radius: 4px; min-width: 60px;">
+            COPY
+        </div>
+    </div>
+       <a href="https://pump.fun/coin/GWbTUV21W1VbMx8fKizAhZu8PTGa8qnKHSy7Vmiapump" target="blank" class="btn" style="background: #000; color: white; margin-top: 100px;">BUY ON PUMP.FUN</a>
+        
+    </section>
+    
+    <section id="faq">
+    <div class="container">
+        <h2 style="font-size: clamp(2.5rem, 6vw, 4.5rem); letter-spacing: clamp(2px, 1vw, 8px); font-family: 'Bungee'; color: var(--primary); text-transform: uppercase; line-height: 1.1;">Croc-Q&A</h2>
+        <div class="faq-container">
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    WHY NO SOCIAL MEDIA? <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    Because Peb is a lone croc. We’re tired of fake hype and bot-filled social accounts. pebcoin.org is the source of truth. If a community wants a home, the community builds the home.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    IS $PEB SAFE? <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    It is safe in terms of liquidity rug because it is protected by the platform's protocol but it is not a guarantee to be safe from a massive dump. Peb doesn't like rug-pulls; they're bad for the swamp ecosystem. If there is a huge pump and dump, it clearly is done with people that has a lot of money. Check the contract for 100% transparency.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    HOW DO I JOIN THE MOVEMENT? <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    Buy $PEB, make a meme, start a thread, or launch a fan page. You don't need permission from a croc to start a feeding frenzy.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    WHAT IS THE UTILITY? <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    The utility is 100% pure, unadulterated vibes and the collective power of a group of people deciding that a crocodile on a domain is worth more than a boring bank account.
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    WHO ARE THE PEOPLE BEHIND THE CREATION? <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    There is only one person behind the creation of $PEB, there is no team and no community built before the launching this project. The creator's name is Taizou Hasegawa.
+                </div>
+            </div>
+
+        </div>
+    </div>
+    </section>
+    
+    <section id="contribute">
+    <div class="container">
+        <h2 style="font-size: clamp(2.5rem, 6vw, 4.5rem); font-family: 'Bungee'; color: var(--primary);">
+            JOIN THE DEV
+        </h2>
+        <p style="font-size: clamp(1.1rem, 1.8vw, 1.6rem); line-height: 1.5; max-width: 800px; margin: 25px auto;">
+            This project is open for <strong>design and code contributors</strong> who are willing to help make this site more playful. 
+            Creator also accept donations to <strong>extend the domain</strong> from expiring and keep the croc alive forever.
+        </p>
+        <p style="font-size: clamp(1.1rem, 1.8vw, 1.6rem); line-height: 1.5; max-width: 800px; margin: 25px auto;">Let's all do this together.</p>
+        <p style="font-size: clamp(1rem, 1.5vw, 1.4rem); font-family: 'Bungee'; color: var(--primary); margin-top: 30px;">
+            REACH OUT: <a style="color: white; text-decoration: none; border-bottom: 2px solid var(--primary);">pebcoin.org@gmail.com</a>
+        </p>
+    </div>
+    </section>
+    
+    <footer style="padding: 40px 20px 40px var(--nav-width); background: #000; text-align: center; border-top: 1px solid rgba(57, 255, 20, 0.2);">
+        <p style="font-family: 'Bungee'; font-size: 0.9rem; color: #555; letter-spacing: 2px;">
+            © 2026 PEBCOIN.ORG • NO TEAM • NO SOCIALS • JUST CHOMP
+        </p>
+    </footer>
+
+    <script>
+        function accept() {
+            document.getElementById('disclaimer').style.display = 'none';
+            document.body.classList.remove('no-scroll');
+        }
+        
+        // FAQ Accordion Logic
+            document.querySelectorAll('.faq-question').forEach(question => {
+                question.addEventListener('click', () => {
+                    const item = question.parentElement;
+                    item.classList.toggle('active');
+                });
+            });
+            
+       function copyCA() {
+            const ca = "GWbTUV21W1VbMx8fKizAhZu8PTGa8qnKHSy7Vmiapump"; // Put your CA here tomorrow
+            navigator.clipboard.writeText(ca).then(() => {
+                const status = document.getElementById('copy-status');
+                const text = document.getElementById('ca-text');
+                
+                // Visual Feedback
+                status.innerText = "COPIED!";
+                status.style.background = "white";
+                
+                // Reset after 2 seconds
+                setTimeout(() => {
+                    status.innerText = "COPY";
+                    status.style.background = "white";
+                }, 2000);
+            });
+        }
+    </script>
 </body>
 </html>
-
