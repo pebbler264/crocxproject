@@ -25,7 +25,7 @@
             width: var(--nav-width); background: #000;
             border-right: 1px solid rgba(57, 255, 20, 0.2);
             transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: 1000; overflow: hidden;
+            z-index: 2000; overflow: hidden;
         }
         nav:hover { width: var(--nav-open); border-right: 1px solid var(--primary); }
         nav a {
@@ -74,6 +74,57 @@
             justify-content: center; align-items: center;
             padding-left: var(--nav-width); text-align: center;
             position: relative; box-sizing: border-box;
+        }
+        #hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start; /* Start from the absolute top */
+            padding-top: 0 !important;
+            margin-top: 0 !important;
+            width: 100%;
+        }
+
+        .announcement-bar {
+            align-self: flex-start; /* Ensures it stretches to the top */
+            width: 100%;
+            margin-top: 0 !important;
+            margin-bottom: 150px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            color: black;
+            z-index: 1000; /* Keeps it above everything */
+            background: #5ea256ff;
+        }
+        .ticker-wrapper {
+            display: flex;
+            width: 100%;
+            overflow: hidden; /* Keeps the text from spilling out the sides */
+        }
+
+        .ticker-text {
+            display: inline-block;
+            white-space: nowrap; /* CRITICAL: This stops the words from stacking */
+            will-change: transform; 
+            padding-left: 0;
+            animation: ticker-loop 20s linear infinite;
+            text-transform: uppercase;
+            font-family: bungee;
+        }
+
+        @keyframes ticker-loop {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                /* Since your phrase is repeated 3 times, this makes it loop perfectly */
+                transform: translateX(-33.333%);
+            }
+        }
+
+        /* Pause on hover so people can read it clearly if they need to */
+        .announcement-bar:hover .ticker-text {
+            animation-play-state: paused;
         }
         .hero-img {
             /* MIN: 300px, IDEAL: 50vw (half the screen), MAX: 800px */
@@ -176,8 +227,10 @@
             justify-content: flex-start; /* Starts content at top instead of centering */
         }
         .hero-img {
-            width: 150px; /* Shrinks the croc so he doesn't eat the whole screen */
-            margin-bottom: 10px;
+            display: block;
+            margin-top: 0; /* Ensures no gap between ticker and image */
+            max-width: 100%;
+            height: auto;
         }
 
         h1 {
@@ -195,41 +248,7 @@
         #tokenomics p{
             font-size: 0.7rem;
         }
-      }  
-        .announcement-bar {
-            background-color: black;
-            color: white;
-            font-family: 'Bungee', cursive;
-            font-size: 0.9rem;
-            padding: 8px 0;
-            overflow: hidden;
-            white-space: nowrap;
-            position: relative;
-            border-bottom: 2px solid black;
-            z-index: 1000;
-        }
-
-        .ticker-wrapper {
-            display: flex;
-            width: 100%;
-        }
-
-        .ticker-text {
-            display: inline-block;
-            padding-left: 100%;
-            animation: ticker 50s linear infinite;
-            text-transform: uppercase;
-        }
-
-        @keyframes ticker {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-100%); }
-        }
-
-        /* Pause on hover so people can read it clearly if they need to */
-        .announcement-bar:hover .ticker-text {
-            animation-play-state: paused;
-        }
+      }       
 
     </style>
 </head>
@@ -247,14 +266,6 @@
         </div>
     </div>
     
-    <div class="announcement-bar">
-        <div class="ticker-wrapper">
-            <div class="ticker-text">
-                SOCIAL MEDIA ACCOUNT IS CREATED, IT'S IN THE FOOTER SECTION — SOCIAL MEDIA ACCOUNT IS CREATED, IT'S IN THE FOOTER SECTION — SOCIAL MEDIA ACCOUNT IS CREATED, IT'S IN THE FOOTER SECTION — 
-            </div>
-        </div>
-    </div>
-
     <nav>
         <a href="#hero"><span class="nav-icon">🐊</span> <span>The Croc</span></a>
         <a href="#about"><span class="nav-icon">📜</span> <span>Origin</span></a>
@@ -266,6 +277,13 @@
     </nav>
 
     <section id="hero">
+        <div class="announcement-bar">
+            <div class="ticker-wrapper">
+                <div class="ticker-text">
+                    SOCIAL MEDIA ACCOUNT IS CREATED, LINK IS IN THE FOOTER SECTION — SOCIAL MEDIA ACCOUNT IS CREATED, LINK IS IN THE FOOTER SECTION — SOCIAL MEDIA ACCOUNT IS CREATED, LINK IS IN THE FOOTER SECTION — SOCIAL MEDIA ACCOUNT IS CREATED, LINK IS IN THE FOOTER SECTION — SOCIAL MEDIA ACCOUNT IS CREATED, LINK IS IN THE FOOTER SECTION —
+                </div>
+            </div>
+        </div>
         <img src="images/176087440345.png" class="hero-img" alt="Peb the Croc">
         <h1 style="font-size: clamp(5rem, 12vw, 10rem); color: #5ea256ff; text-shadow: 2px 2px 0 black, -2px 2px 0 black, -2px -2px 0 black, 2px -2px 0 black;">$PEB</h1>
         <p style="font-size: clamp(1.2rem, 3vw, 2.5rem); letter-spacing: clamp(2px, 1vw, 8px); font-family: 'Bungee'; color: #070704ff; text-transform: uppercase;">
